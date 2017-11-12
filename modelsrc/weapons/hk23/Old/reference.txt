@@ -1,0 +1,4 @@
+Slide   - Up 2
+Hammer  - Left 2
+Trigger - Down 2
+Clip    - Down 5

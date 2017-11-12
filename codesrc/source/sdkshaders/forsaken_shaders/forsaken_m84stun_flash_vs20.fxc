@@ -1,0 +1,23 @@
+#include "common_vs_fxc.h"
+
+struct VS_INPUT
+{
+	float3 vPosition : POSITION;
+	float2 vTexCoord : TEXCOORD0;
+};
+
+struct VS_OUTPUT
+{
+	float4 vPosition : POSITION;
+	float2 vTexCoord : TEXCOORD0;
+};
+
+VS_OUTPUT main (const VS_INPUT vsIn)
+{
+	VS_OUTPUT vsOut = ( VS_OUTPUT )0;
+
+	vsOut.vPosition = mul(float4(vsIn.vPosition, 1), cModelViewProj);
+	vsOut.vTexCoord = vsIn.vTexCoord;
+
+	return vsOut;
+}

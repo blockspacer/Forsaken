@@ -1,0 +1,20 @@
+#include "common_ps_fxc.h"
+
+sampler texFullScreen : register(s0);
+
+float fTimeConst : register(c0);
+float f4ScreenColor : register(c1);
+
+struct PS_INPUT
+{
+	HALF2 vTexCoord : TEXCOORD0;
+	HALF2 fTimeConst : TEXCOORD1;
+	HALF4 f4FlashColor : COLOR0;
+};
+
+HALF4 main(PS_INPUT psIn) : COLOR
+{
+	HALF4 f4ScreenColor = tex2D(texFullScreen, psIn.vTexCoord);
+
+	return f4ScreenColor + (psIn.f4FlashColor - f4ScreenColor) * fTimeConst;
+}

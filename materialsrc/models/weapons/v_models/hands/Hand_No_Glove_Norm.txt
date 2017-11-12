@@ -1,0 +1,3 @@
+"nolod" "1"
+"nomip" "1"
+"normal" "1"

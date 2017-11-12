@@ -1,0 +1,22 @@
+default:  fxctmp9\forsaken_m84stun_flash_ps20.inc shaders\fxc\forsaken_m84stun_flash_ps20.vcs fxctmp9\forsaken_m84stun_flash_vs20.inc shaders\fxc\forsaken_m84stun_flash_vs20.vcs
+
+clean:
+	del /f /q fxctmp9\forsaken_m84stun_flash_ps20.inc
+	del /f /q "shaders\fxc\forsaken_m84stun_flash_ps20.vcs"
+	del /f /q fxctmp9\forsaken_m84stun_flash_vs20.inc
+	del /f /q "shaders\fxc\forsaken_m84stun_flash_vs20.vcs"
+
+fxctmp9\forsaken_m84stun_flash_ps20.inc shaders\fxc\forsaken_m84stun_flash_ps20.vcs: ..\..\devtools\bin\updateshaders.pl ..\..\devtools\bin\fxc_prep.pl forsaken_m84stun_flash_ps20.fxc ..\..\materialsystem\stdshaders\common_hlsl_cpp_consts.h ..\..\materialsystem\stdshaders\common_fxc.h ..\..\materialsystem\stdshaders\common_ps_fxc.h
+	perl ..\..\devtools\bin\fxc_prep.pl  -shaderoutputdir shaders -source "..\.." forsaken_m84stun_flash_ps20.fxc
+	echo forsaken_m84stun_flash_ps20.fxc>> filestocopy.txt
+	echo ..\..\materialsystem\stdshaders\common_hlsl_cpp_consts.h>> filestocopy.txt
+	echo ..\..\materialsystem\stdshaders\common_fxc.h>> filestocopy.txt
+	echo ..\..\materialsystem\stdshaders\common_ps_fxc.h>> filestocopy.txt
+
+fxctmp9\forsaken_m84stun_flash_vs20.inc shaders\fxc\forsaken_m84stun_flash_vs20.vcs: ..\..\devtools\bin\updateshaders.pl ..\..\devtools\bin\fxc_prep.pl forsaken_m84stun_flash_vs20.fxc ..\..\materialsystem\stdshaders\common_hlsl_cpp_consts.h ..\..\materialsystem\stdshaders\common_vs_fxc.h ..\..\materialsystem\stdshaders\common_fxc.h
+	perl ..\..\devtools\bin\fxc_prep.pl  -shaderoutputdir shaders -source "..\.." forsaken_m84stun_flash_vs20.fxc
+	echo forsaken_m84stun_flash_vs20.fxc>> filestocopy.txt
+	echo ..\..\materialsystem\stdshaders\common_hlsl_cpp_consts.h>> filestocopy.txt
+	echo ..\..\materialsystem\stdshaders\common_vs_fxc.h>> filestocopy.txt
+	echo ..\..\materialsystem\stdshaders\common_fxc.h>> filestocopy.txt
+

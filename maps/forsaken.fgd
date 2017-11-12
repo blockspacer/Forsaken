@@ -1,0 +1,163 @@
+@include "base.fgd"
+
+// Forsaken FGD Release Beta 1.1
+
+// Team spawn points
+@PointClass base(Angles) studio("models/editor/playerstart.mdl") = forsaken_civspawn :
+	"This entity marks the start point for civilians."
+[
+]
+
+@PointClass base(Angles) studio("models/editor/playerstart.mdl") = forsaken_govspawn :
+	"This entity marks the start point for governors."
+[
+]
+
+@PointClass base(Angles) studio("models/editor/playerstart.mdl") = forsaken_joinspawn :
+	"This entity marks the eye point of a player first joining a map."
+[
+]
+
+@PointClass base(Targetname, Angles) studio("models/editor/playerstart.mdl") = forsaken_objspawn :
+	"This entity marks a spawn for a owned objective."
+[
+	// Variables
+	objective_name(string) : "Objective Name" : "The name of the objective this fortification is tied to."
+]
+
+@PointClass base(Angles) studio("models/editor/playerstart.mdl") = forsaken_relspawn :
+	"This entity marks the start point for religious."
+[
+]
+
+// Objectives
+@BaseClass = forsaken_objective_entity :
+	"This entity is used as the base class for all other objectives."
+[
+	// Outputs
+	output ObjectiveCompleted(integer) : "This objective has been completed."
+
+	// Variables
+	objective_name(string) : "The name of the objective (i.e. North Arms Store)."
+]
+
+// Capture Objective
+@SolidClass base(Targetname, Parentname, forsaken_objective_entity) = forsaken_captureobjective_entity : 
+	"This entity is used for gameplay where players must capture an objective."
+[
+	// Outputs
+
+	// Variables
+	objective_capturelength(float) : "Capture Time" : 30 : "Sets the length of time needed to capture an objective."
+	objective_resourceamount(integer) : "Resource Amount" : 0 : "Sets the amount of resources this capture objective has."
+	objective_resourcetype(integer) : "Resource Type" : 0 : "Sets the type of the resource. [0 = None, 1 = Nutrition, 2 = Ordinance]"
+	objective_teamcapture(integer) : "Team(s) Can Capture" : 0 : "Sets the team(s) that can capture this objective. [1 = Civ, 2 = Gov, 4 = Rel]"
+]
+
+// Capture Objective - Team-Based Destroyable Models
+@PointClass base(Angles, Studiomodel, Targetname) = forsaken_fortified_entity :
+	"This entity is used to represent destructable models that represent a fortified position."
+[
+	// Inputs
+	input SetTeamOwner(integer) : "A team has completed the objective the fortification is tied to, enabling this fortification."
+	// Outputs
+	output FortificationComplete(integer) : "This fortification has been built."
+	output FortificationDestroyed(integer) : "This fortification has been destroyed."
+	output FortificationUpgraded(integer) : " This fortification has been upgraded."
+
+	// Variables
+	civ_model(studio) : "Civilian Fortified Objective Model"
+	gov_model(studio) : "Governor Fortified Objective Model"
+	rel_model(studio) : "Religious Fortified Objective Model"
+
+	fortification_health(integer) : "Fortification Health" : 100 : "Sets the health of the objective."
+	fortification_teamowner(integer) : "Fortification Owner" : 0 : "Sets the team that owns this fortification. [1 = Civ, 2 = Gov, 4 = Rel]"
+
+	objective_name(string) : "Objective Name" : "The name of the objective this fortification is tied to."
+]
+
+// Capture Objective - Team-Based Support Destroyable Models
+@PointClass base(Angles, Studiomodel, Targetname) = forsaken_fortifiedsupport_entity :
+	"This entity is used to represent support models for a fortified position, depending on the level of the fortification."
+[
+	// Inputs
+	input FortificationUpgraded(integer) : "The fortification has been upgraded."
+	input SetTeamOwner(integer) : "A team has completed the objective the fortification support is tied to, enabling this fortification support."
+
+	// Variables
+	civ_model(studio) : "Civilian Fortified Objective Model"
+	gov_model(studio) : "Governor Fortified Objective Model"
+	rel_model(studio) : "Religious Fortified Objective Model"
+
+	support_level(choices) : "Fortification Support Level" : 0 : "Sets the level of this fortification support." = 
+	[
+		0: "Level 0"
+		1: "Level 1"
+		2: "Level 2"
+		3: "Level 3"
+	]
+	support_health(integer) : "Fortification Support Health" : 100 : "Sets the health of the fortification support."
+	support_teamowner(integer) : "Fortification Support Owner" : 0 : "Sets the team that owns this fortification. [1 = Civ, 2 = Gov, 4 = Rel]"
+
+	objective_name(string) : "Objective Name" : "The name of the objective this fortification is tied to."
+]
+
+// Destroy Objective
+@PointClass base(Angles, Studiomodel, Targetname, forsaken_objective_entity) = forsaken_destroyobjective_entity :
+	"This entity is used for objective-based gameplay."
+[
+	// Outputs
+
+	// Variables
+	model(studio) : "Objective Model"
+	objective_health(integer) : "Objective Health" : 100 : "Sets the health of the objective."
+	objective_teamowner(integer) : "Team Owner(s)" : 0 : "Sets the team(s) that own this objective. [1 = Civ, 2 = Gov, 4 = Rel]"
+]
+
+// Win Logic
+@PointClass base(Targetname) = forsaken_winlogic_entity : "This entity is used for constructing complex win logic in Forsaken."
+[
+	// Inputs
+	input ObjectiveChangeState(integer) : "An objective has changed state, value should be the team the objective has gone true for."
+
+	// Variables
+	logic_string(string) : "Logic string for the win scenario."
+	team_owner(integer) : "Team Owner" : 0 : "The team that owns this win case. [1 = Civ, 2 = Gov, 4 = Rel]"
+]
+
+// Campfire Entity
+@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_fire") color(0 180 0) = forsaken_env_campfire : 
+	"For campfires ONLY."
+[
+	health(integer) : "Duration" : 30 : "Amount of time the fire will burn."
+	firesize(integer) : "Size" : 64 : "Height (in world units) of the flame."
+	fireattack(integer) : "Attack" : 4 : "Amount of time the fire takes to grow to full strength."
+	firetype(choices) : "Type" : 0 =
+	[
+		0 : "Natural"
+		1 : "Plasma"
+	]
+	spawnflags(flags) =
+	[
+		1:	"Infinite Duration" : 0
+		2:	"Smokeless" : 0
+		4:	"Start On" : 0
+		8:	"Start Full" : 0
+		16:	"Don't drop" : 0
+		32: 	"No glow" : 0
+		128: 	"Delete when out" : 0
+		256: 	"Visible from above" : 0
+	]
+
+	ignitionpoint(float) : "Ignition Point" : 32 : "Amount of heat 'damage' to take before this flame should ignite."
+	damagescale(float) : "Damage Scale" : "1.0" : "Multiplier of the burn damage done by the flame."
+
+	// Inputs
+	input StartFire(void) : "Start the fire."
+	input Extinguish(float) : "Puts out the fire permanently in the number of seconds specified."
+	input ExtinguishTemporary(float): "Puts out the fire temporarily in the number of seconds specified."
+
+	// Outputs
+	output OnIgnited(void) : "Fires when the fire is first ignited."
+	output OnExtinguished(void) : "Fires when the fire is fully extinguished."
+]

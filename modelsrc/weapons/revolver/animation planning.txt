@@ -1,0 +1,15 @@
+raging bull animation planning...
+
+[b]raging bull[/b]
+Draw
+Idle
+IdleEmpty
+Shoot1
+Shoot2
+toReload
+Insert1
+Insert2
+Insert3
+Insert4
+Insert5
+fromReload

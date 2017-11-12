@@ -1,0 +1,10 @@
+DECLARE_CLIENT_EFFECT("EjectBrass_1201FP", Forsaken_EjectWeaponBrass_1201FP); 
+DECLARE_CLIENT_EFFECT("EjectBrass_HK23", Forsaken_EjectWeaponBrass_HK23); 
+DECLARE_CLIENT_EFFECT("EjectBrass_MAC10", Forsaken_EjectWeaponBrass_MAC10); 
+DECLARE_CLIENT_EFFECT("EjectBrass_P99", Forsaken_EjectWeaponBrass_P99); 
+DECLARE_CLIENT_EFFECT("EjectBrass_RagingBull", Forsaken_EjectWeaponBrass_RagingBull); 
+DECLARE_CLIENT_EFFECT("EjectBrass_Remington", Forsaken_EjectWeaponBrass_Remington); 
+DECLARE_CLIENT_EFFECT("EjectBrass_SA80", Forsaken_EjectWeaponBrass_SA80);
+
+ACT_VM_SPRINT
+ACT_VM_KICK

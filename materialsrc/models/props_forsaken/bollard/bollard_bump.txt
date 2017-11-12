@@ -1,0 +1,2 @@
+"normal" 1
+"nocompress" 1
